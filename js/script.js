@@ -29,6 +29,39 @@
     })
 }(jQuery);
 
+//Validate form
+
+/*
+
+$(document).ready(function() {
+    $('#contactForm').validate({
+      rules: {
+          name: {
+              required: true,
+          },
+          email: {
+              required: true,
+          },
+          phone: {
+              required: true,
+          },
+          message: {
+              required: true,
+          },
+      }
+  });
+
+    $('#contactForm input').on('keyup blur', function() {
+        if ($('#contactForm').valid()) {
+            $('#sendMessageButton').prop('disabled', false);
+        } else {
+          $('#sendMessageButton').prop('disabled', 'disabled');
+        }
+    });
+});
+
+*/
+
 //SEND EMAIL FORM
 
 $(function () {
@@ -37,7 +70,7 @@ $(function () {
         $form = $('#contactForm'),
         $name = $('#name'),
         $replyTo = $('#email'),
-        $phone = $('phone'),
+        $phone = $('#phone'),
         $message = $('#message'),
         action = $form.prop('action');
 
@@ -55,9 +88,17 @@ $(function () {
             success: function () {
                 toastr.success('Thanks for sending your message.', 'Have fun!');
                 $message.val('');
+            },
+            error: function() {
+                toastr.error('Sorry, an error occurred!');
+                $message.val('');
             }
         });
 
         event.preventDefault();
+
+        $('#contactForm').trigger('reset');
+
+        $('#contactForm').val();
     });
 });
